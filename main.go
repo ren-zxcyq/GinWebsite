@@ -1,10 +1,55 @@
 package main
 
 import (
-	"net/http"
+	"core"
+	"fmt"
 
 	"github.com/gin-gonic/gin"
 )
+
+func main() {
+
+	//r := setupRouter()
+
+	// Listen and Server in 0.0.0.0:8080
+	r := gin.Default()
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "pong",
+		})
+	})
+
+	//	Issue Cookie according to Gin Example https://gin-gonic.com/docs/examples/cookie/
+	//									using https://stackoverflow.com/a/38418781
+	//	Error is handled within
+	r.GET("/cookie-pols", func(c *gin.Context) {
+
+		cookie, err := c.Cookie("gin_cookie")
+
+		if err != nil {
+			/*//	Set in case of no cookie message
+			cookie = "NotSet"
+			*/
+			//	Cookie Not Set
+			fmt.Println("[GIN] Remote Host Cookie - NotSet")
+
+			//	Issue new Cookie using	./core/core.go
+			newcval := core.GenCookie("username:password")
+			fmt.Println(newcval)
+			c.SetCookie("gin_cookie", newcval, 3600, "/", "localhost", false, false)
+			cookie = newcval
+			fmt.Println("[GIN] Remote Host Cookie - Issued -", cookie)
+		}
+
+		fmt.Printf("[GIN] Remote Host Cookie - %s \n", cookie)
+
+	})
+
+	r.Run(":8081")
+}
+
+/*
+//	This portion is part of the Gin Quickstart Tutorial
 
 var db = make(map[string]string)
 
@@ -57,9 +102,4 @@ func setupRouter() *gin.Engine {
 
 	return r
 }
-
-func main() {
-	r := setupRouter()
-	// Listen and Server in 0.0.0.0:8080
-	r.Run(":8080")
-}
+*/
