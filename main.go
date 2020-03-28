@@ -16,8 +16,17 @@ func main() {
 	// Listen and Server in 0.0.0.0:8080
 	r := gin.Default()
 
+	r.Static("/css", "templates/css")
+	r.Static("/images", "templates/images")                        //	Serve Images Folder
+	r.Static("/fonts", "templates/fonts")                          //	Serve Fonts Folder
+	r.StaticFile("favicon.ico", "templates/resources/favicon.ico") //	Serve single File
+
 	//	Process templates at start-up -> they don't have to be loaded from the disk again.
-	r.LoadHTMLGlob("templates/*")
+	r.LoadHTMLGlob("templates/*.tmpl") //	This fails if i don't do this, because it finds ./css directory
+	r.LoadHTMLGlob("templates/*.html") //	^ Refers to usage of LoadHTMLGlob(templates/*)
+	//	filepath.Join(os.Getenv("GOPATH")
+	//r.Use(static.Serve("/templates/css/")) // static files have higher priority over dynamic routes
+	//r.NotFound(static.Serve("/public"))
 
 	//	Define route for the index page
 	r.GET("/", func(c *gin.Context) {
@@ -127,6 +136,18 @@ func main() {
 
 		fmt.Printf("[GIN] Remote Host Cookie - %s \n", cookie)
 
+	})
+
+	//Testing a simple Layout
+	r.GET("/test-site", func(c *gin.Context) {
+
+		c.HTML(
+			http.StatusOK,
+			"index.html",
+			gin.H{
+				"title": "My golang Testing Grounds",
+			},
+		)
 	})
 
 	r.Run(":8081")

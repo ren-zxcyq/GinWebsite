@@ -1,0 +1,90 @@
+/*  
+    According to https://www.webdesignerdepot.com/2013/01/how-to-use-any-font-you-like-with-css3/
+    local() checks if the font exists locally first b4 downloading it
+*/
+@font-face {
+    font-family: 'Merriweather';
+    src: local('Merriweather Black'), local('Merriweather-Black'), url('../fonts/Merriweather/Merriweather-Black.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Merriweather';
+    src: local('Merriweather BlackItalic'), local('Merriweather-BlackItalic'), url('../fonts/Merriweather/Merriweather-BlackItalic.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Merriweather';
+    src: local('Merriweather Bold'), local('Merriweather-Bold'), url('../fonts/Merriweather/Merriweather-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Merriweather';
+    src: local('Merriweather BoldItalic'), local('Merriweather-BoldItalic'), url('../fonts/Merriweather/Merriweather-BoldItalic.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Merriweather';
+    src: local('Merriweather Italic'), local('Merriweather-Italic'), url('../fonts/Merriweather/Merriweather-Italic.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Merriweather';
+    src: local('Merriweather Light'), local('Merriweather-Light'), url('../fonts/Merriweather/Merriweather-Light.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Merriweather';
+    src: local('Merriweather LightItalic'), local('Merriweather-LightItalic'), url('../fonts/Merriweather/Merriweather-LightItalic.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Merriweather';
+    src: local('Merriweather Regular'), local('Merriweather-Regular'), url('../fonts/Merriweather/Merriweather-Regular.ttf') format('truetype');
+   
+}
+
+
+
+body {
+    background-color: purple;
+    background-image: url("../images/background.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;   /*https://stackoverflow.com/a/53255810*/   
+    
+    font-family: 'Merriweather', monospace; /*  ??fallback??    */
+    z-index: -1;
+}
+.container {
+    background-color: royalblue;
+    width: 100%;
+    /*height: auto;*/
+    z-index: 1;
+}
+
+p {
+    color: rosybrown;
+}
+nav {
+    background-color: purple;
+    display: block;
+    z-index: 2;
+}
+nav > li {
+    display: inline-block;  /*https://stackoverflow.com/a/43666143*/
+    z-index: 3;
+}
+article {
+    background-color: slateblue;
+    float: left;
+    height: inherit;
+    width: 75%;
+}
+aside {
+    background-color: seashell;
+    float: right;
+    width: 25%;
+    height: inherit;
+    }
+footer {
+    background-color: gray;
+    position: fixed;
+    bottom: 2em;
+    z-index: 2;
+    user-select: none;  /*https://developer.mozilla.org/en-US/docs/Web/CSS/user-select*/
+    cursor: default;    /*https://stackoverflow.com/a/8245325*/
+}
