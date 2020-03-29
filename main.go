@@ -16,7 +16,7 @@ func main() {
 	// Listen and Server in 0.0.0.0:8080
 	r := gin.Default()
 
-	r.Static("/css", "templates/css")
+	r.Static("/css", "templates/css")                              //	Serve CSS Folder
 	r.Static("/images", "templates/images")                        //	Serve Images Folder
 	r.Static("/fonts", "templates/fonts")                          //	Serve Fonts Folder
 	r.StaticFile("favicon.ico", "templates/resources/favicon.ico") //	Serve single File
@@ -144,9 +144,26 @@ func main() {
 		c.HTML(
 			http.StatusOK,
 			"index.html",
-			gin.H{
-				"title": "My golang Testing Grounds",
-			},
+			nil,
+			//gin.H{
+			//	"title": "My golang Testing Grounds",
+			//},
+		)
+	})
+	//	Above layout contains a link to this
+	r.GET("/test_neo4j.html", func(c *gin.Context) {
+
+		//ret, err := helloWorld("bolt://localhost:7687", "neo4j", "GinWebsite-Graph")
+		ret, err := helloWorld()
+		if err != nil {
+			fmt.Println("Something went wrong!", err)
+			fmt.Println("Ret _", ret)
+		}
+		fmt.Println("Ret AFTER _ ", ret)
+		c.HTML(
+			http.StatusOK,
+			"test_neo4j.html",
+			nil,
 		)
 	})
 
